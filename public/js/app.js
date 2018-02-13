@@ -1,15 +1,33 @@
-// Instanciamos al objeto XMLHttpRequest
-const XHR = new XMLHttpRequest;
-console.log(XHR);
-
-XHR.onreadystatechange = function() {
-    if(XHR.readyState == 4 && XHR.status == 200) {
-        console.log(JSON.parse(XHR.responseText));
-        console.log(XHR.res);
-    } else {
-        console.log('Hay un problema en el servidor');
-    }
-};
-
-XHR.open('GET', 'https://api.github.com/zen');
-XHR.send();
+// alert('Hola mundo desde mi server');
+const btn = document.querySelector("button");
+const priceSpan = document.querySelector("#price");
+ let currency = 'EUR'; 
+const uri = 'https://api.coindesk.com/v1/bpi/currentprice.json';
+btn.addEventListener('click', function(){
+     fetch(uri)
+     .then(function(response){
+         console.log(response);
+         return response.json()
+     }).then(function(data){
+        console.log(data.bpi[currency].rate);
+        priceSpan.innerText = data.bpi[currency].rate + currency ;
+    })
+     .catch(function(error){
+         console.log(error);
+     }) 
+  /*   fetch(url)
+     .then(function(response){
+         console.log(response);
+         return response.json().then(function(data){
+             console.log(data);
+         })
+     })
+     .catch(function(error){
+         console.log(error);
+     }) */
+})
+/* fetch(url)
+    .then(function(response){
+        console.log(response);
+        console.log(response.json());
+    }) */
